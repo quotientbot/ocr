@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from .app import init_application
 from aiohttp import web
-import asyncio
 
 
 class StartServer:

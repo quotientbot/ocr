@@ -1,0 +1,8 @@
+aiohttp==3.7.4.post0; python_version >= "3.8" and python_full_version >= "3.8.0" and python_version < "4.0"
+fastapi==0.73.0; python_full_version >= "3.6.1"
+imagehash==4.2.1
+pytesseract==0.3.8; python_version >= "3.6"
+pydantic==1.8.2; python_version >= "3.7" and python_version < "4.0" and python_full_version >= "3.6.1"
+aiohttp-asgi==0.4.0; python_version > "3.6" and python_version < "4"
+chardet==4.0.0; python_version >= "3.6" and python_full_version >= "3.8.0"
+typing-extensions==4.0.1; python_version >= "3.7" and python_full_version >= "3.8.0" and python_version < "4.0"

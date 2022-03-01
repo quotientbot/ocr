@@ -24,8 +24,3 @@ class StartServer:
 
 async def main(server: StartServer, **kwargs):
     await server.start_application()
-
-
-if __name__ == "__main__":
-    server = StartServer()
-    asyncio.run(main(server,))

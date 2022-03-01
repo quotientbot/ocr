@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from fastapi import APIRouter, status
 from typing import List
 
-from ..helpers._const import SS
+from ..helper._const import SS
 from models import ImageResponse
-from ..helpers.image import get_image, get_image_dhash, get_image_phash, get_image_string
+from ..helper.image import get_image, get_image_dhash, get_image_phash, get_image_string
 import asyncio
 
 router = APIRouter()

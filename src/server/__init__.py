@@ -18,8 +18,6 @@ class StartServer:
             await self.webserver.stop()
             await self.app.shutdown()
             await self.app.cleanup()
-            self.task.cancel()
-
 
 async def main(server: StartServer, **kwargs):
     await server.start_application()

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ocr"
+version = "0.1.0"
+description = ""
+authors = ["deadaf <askpygod@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiohttp = "^3.8.1"
+fastapi = "^0.74.1"
+pytesseract = "^0.3.9"
+Pillow = "^9.0.1"
+ImageHash = "^4.2.1"
+aiohttp-asgi = "^0.4.0"
+python-decouple = "^3.6"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^22.1.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

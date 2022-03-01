@@ -4,7 +4,8 @@ from fastapi import APIRouter, status
 from typing import List
 
 from ..helper._const import SS
-from src.models import ImageResponse
+from models import ImageResponse
+
 # I don't know in my IDE the imports were broken without `src.`
 # even tho' they are in same directory...
 from ..helper.image import get_image, get_image_dhash, get_image_phash, get_image_string

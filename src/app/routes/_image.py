@@ -3,8 +3,7 @@ from __future__ import annotations
 from fastapi import APIRouter, status
 from typing import List
 
-from ..helper._const import SS
-from ...models import ImageResponse
+from ..helper._const import SS, ImageResponse
 
 # I don't know in my IDE the imports were broken without `src.`
 # even tho' they are in same directory...

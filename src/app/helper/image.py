@@ -9,7 +9,7 @@ import aiohttp
 from PIL import Image, ImageFilter
 
 from ._const import SS
-from ...utils import ToAsync
+from utils import ToAsync
 
 
 async def get_image(attch: SS) -> Image:

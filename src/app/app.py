@@ -11,8 +11,6 @@ api_scheme = APIKeyHeader(name="authorization")
 
 async def verify_key(key: str = Depends(api_scheme)):
     if key != config("FASTAPI_KEY"):
-        print(key)
-        print(config("FASTAPI_KEY"))
         raise HTTPException(status_code=403)
 
 

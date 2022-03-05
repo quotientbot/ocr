@@ -6,7 +6,7 @@ import pytesseract
 import io
 import aiohttp
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 from ._const import SS
 from ...utils import ToAsync
@@ -35,7 +35,7 @@ def slice_image(img, height: int = 400):
 @ToAsync()
 def get_image_string(img):
 
-    _img = img.convert("L")
+    _img = img.convert("L").filter(ImageFilter.SHARPEN)
 
     cropped = slice_image(_img)
     cropped.append(_img)

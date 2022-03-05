@@ -6,7 +6,10 @@ from decouple import config
 
 from .routes._image import router as _image_router
 
+import os
+
 api_scheme = APIKeyHeader(name="authorization")
+os.environ["OMP_THREAD_LIMIT"] = "1"
 
 
 async def verify_key(key: str = Depends(api_scheme)):

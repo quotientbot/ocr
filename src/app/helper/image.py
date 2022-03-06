@@ -9,7 +9,7 @@ import aiohttp
 from PIL import Image, ImageFilter
 
 from ._const import SS
-from utils import ToAsync
+from utils import to_async
 
 
 async def get_image(attch: SS) -> Image:
@@ -32,7 +32,7 @@ def slice_image(img, height: int = 400):
     return _l
 
 
-@ToAsync()
+@to_async()
 def get_image_string(img):
 
     _img = img.convert("L").filter(ImageFilter.SHARPEN)
@@ -52,11 +52,11 @@ def get_image_string(img):
     return text
 
 
-@ToAsync()
+@to_async()
 def get_image_dhash(img, size=64):
     return imagehash.dhash(img, size)
 
 
-@ToAsync()
+@to_async()
 def get_image_phash(img, size=64):
     return imagehash.phash(img, size)

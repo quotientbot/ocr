@@ -6,7 +6,7 @@ from functools import wraps, partial
 from asyncio import get_event_loop
 
 
-class ToAsync:
+class to_async:
     def __init__(self, *, executor: Optional[ThreadPoolExecutor] = None):
 
         self.executor = executor

@@ -10,6 +10,7 @@ from lru import LRU
 
 import pytesseract
 
+__all__ = ("OCRImage",)
 
 cache = LRU(32)
 

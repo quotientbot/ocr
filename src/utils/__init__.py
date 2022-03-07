@@ -1,2 +1,2 @@
 from .converters import *
-from .img import *
+from ._ocr import *

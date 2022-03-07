@@ -5,6 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import wraps, partial
 from asyncio import get_event_loop
 
+__all__ = ("to_async",)
+
 
 class to_async:
     def __init__(self, *, executor: Optional[ThreadPoolExecutor] = None):

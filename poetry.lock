@@ -228,6 +228,14 @@ scipy = "*"
 six = "*"
 
 [[package]]
+name = "lru-dict"
+version = "1.1.7"
+description = "An Dict like LRU container."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "multidict"
 version = "6.0.2"
 description = "multidict implementation"
@@ -490,7 +498,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ad65443f3f780084131cf18005f363f9f8ef253837408870ee317a2c079c70bf"
+content-hash = "7fefe553c7df8afff619571f12a96d288a584f7b6daae169fd4b8d57698bff31"
 
 [metadata.files]
 aiohttp = [
@@ -733,6 +741,9 @@ idna = [
 ]
 imagehash = [
     {file = "ImageHash-4.2.1.tar.gz", hash = "sha256:a4af957814bc9832d9241247ff03f76e778f890c18147900b4540af124e93011"},
+]
+lru-dict = [
+    {file = "lru-dict-1.1.7.tar.gz", hash = "sha256:45b81f67d75341d4433abade799a47e9c42a9e22a118531dcb5e549864032d7c"},
 ]
 multidict = [
     {file = "multidict-6.0.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:0b9e95a740109c6047602f4db4da9949e6c5945cefbad34a1299775ddc9a62e2"},

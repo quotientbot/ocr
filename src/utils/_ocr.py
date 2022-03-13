@@ -12,7 +12,7 @@ import pytesseract
 
 __all__ = ("OCRImage",)
 
-cache = LRU(32)
+cache = LRU(100)
 
 
 class OCRImage:

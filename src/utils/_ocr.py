@@ -34,17 +34,12 @@ class OCRImage:
 
     @staticmethod
     async def from_url(url: str):
-        print(url)
         async with aiohttp.ClientSession() as session:
             resp = await session.post(url)
             if resp.status != 200:
                 return None
 
-            return OCRImage(
-                Image.open(io.BytesIO(await resp.read()))
-                .convert("L")
-                .filter(ImageFilter.SHARPEN)
-            )
+            return OCRImage(Image.open(io.BytesIO(await resp.read())).convert("L").filter(ImageFilter.SHARPEN))
 
     async def get_text(self):
         if t := cache.get(self.dhash):
@@ -64,7 +59,10 @@ class OCRImage:
             w, h = _.size
             _ = _.resize((w * 3, h * 3)).filter(ImageFilter.SHARPEN)
 
-            t += pytesseract.image_to_string(_, lang="eng", config="--oem 3 --psm 12")
+            try:
+                t += pytesseract.image_to_string(_, lang="eng", config="--oem 3 --psm 12")
+            except pytesseract.TesseractError:
+                continue
 
         cache[self.dhash] = t
         return t

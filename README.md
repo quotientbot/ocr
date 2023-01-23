@@ -1,3 +1,11 @@
+![Language](https://img.shields.io/badge/lang-Python%203.9-green)
+![Library](https://img.shields.io/badge/lib-pytesseract%200.3.10-blue)
+![Library](https://img.shields.io/badge/lib-FastAPI%20-gold)
+![Library](https://img.shields.io/badge/lib-ImageHash%20-red)
+![Library](https://img.shields.io/badge/lib-PIL%20-purple)
+
+
+
 # OCR-API
 The microservice that powers [Quotient's](https://github.com/quotientbot/Quotient-Bot/) image text extraction & image duplicacy detection needs.
 

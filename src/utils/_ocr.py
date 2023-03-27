@@ -1,39 +1,46 @@
-from PIL import Image, ImageFilter
+from __future__ import annotations
 
-import imagehash
 import functools
 import io
+import itertools
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
+
 import aiohttp
+import imagehash
+import pytesseract
+from lru import LRU
+from PIL import Image, ImageFilter
 
 from .converters import to_async
-from lru import LRU
-
-import pytesseract
 
 __all__ = ("OCRImage",)
 
-cache = LRU(100)
+cache: "Dict[str, str]" = LRU(100)
 
 
 class OCRImage:
-    def __init__(self, img):
+    if TYPE_CHECKING:
+        crop: Image.Image.crop
+        size: Image.Image.size
+
+    def __init__(self, img: Image) -> None:
         self._img = img
 
-    def __getattr__(self, key):
+    def __getattr__(self, key: str) -> Any:
         if key == "_img":
             raise AttributeError()
         return getattr(self._img, key)
 
     @functools.cached_property
-    def dhash(self, size=64):
-        return imagehash.dhash(self, size).__str__()
+    def dhash(self, size: int = 64) -> str:
+        return str(imagehash.dhash(self, size))
 
     @functools.cached_property
-    def phash(self, size=64):
-        return imagehash.phash(self, size).__str__()
+    def phash(self, size: int = 64) -> str:
+        return str(imagehash.phash(self, size))
 
     @staticmethod
-    async def from_url(url: str):
+    async def from_url(url: str) -> Optional[OCRImage]:
         async with aiohttp.ClientSession() as session:
             resp = await session.post(url)
             if resp.status != 200:
@@ -41,38 +48,36 @@ class OCRImage:
 
             return OCRImage(Image.open(io.BytesIO(await resp.read())).convert("L").filter(ImageFilter.SHARPEN))
 
-    async def get_text(self):
-        if t := cache.get(self.dhash):
-            return t
-
-        return await self.__run_ocr()
+    async def get_text(self) -> str:
+        try:
+            return cache[self.dhash]
+        except KeyError:
+            return await self.__run_ocr()
 
     @to_async()
-    def __run_ocr(self):
+    def __run_ocr(self) -> str:
+        images: List[Image.Image] = self.__image_slices()
 
-        _imges = self.__image_slices()
-
-        _imges.append(self)
+        images.append(self)
         t = ""
 
-        for _ in _imges:
-            w, h = _.size
-            _ = _.resize((w * 3, h * 3)).filter(ImageFilter.SHARPEN)
+        for image in images:
+            w, h = image.size
+            image = image.resize((w * 3, h * 3)).filter(ImageFilter.SHARPEN)
 
             try:
-                t += pytesseract.image_to_string(_, lang="eng", config="--oem 3 --psm 12")
+                t += pytesseract.image_to_string(image, lang="eng", config="--oem 3 --psm 12")
             except pytesseract.TesseractError:
                 continue
 
         cache[self.dhash] = t
         return t
 
-    def __image_slices(self, height: int = 400):
-        _l = []
+    def __image_slices(self, height: int = 400) -> List[Image.Image]:
+        list_of_images: List[Image.Image] = []
         imgwidth, imgheight = self.size
-        for i in range(imgheight // height):
-            for j in range(imgwidth // imgwidth):
-                box = (j * imgwidth, i * height, (j + 1) * imgwidth, (i + 1) * height)
-                _l.append(self.crop(box))
+        for i, j in itertools.product(range(imgheight // height), range(imgwidth // imgwidth)):
+            box = (j * imgwidth, i * height, (j + 1) * imgwidth, (i + 1) * height)
+            list_of_images.append(self.crop(box))
 
-        return _l
+        return list_of_images

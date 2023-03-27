@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from fastapi import FastAPI, Depends, HTTPException
-from fastapi.security import APIKeyHeader
+import os
+
 from decouple import config
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.security import APIKeyHeader
 
 from .routes._image import router as _image_router
-
-
-import os
 
 api_scheme = APIKeyHeader(name="authorization")
 os.environ["OMP_THREAD_LIMIT"] = "1"

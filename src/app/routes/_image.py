@@ -1,32 +1,30 @@
 from __future__ import annotations
 
-from fastapi import APIRouter
 from typing import List
 
-from ..helper._const import SS, ImageResponse
+from fastapi import APIRouter
 
 from utils import OCRImage
+
+from ..helper._const import SS, ImageResponse
 
 router = APIRouter()
 
 
 @router.post("/ocr", status_code=200, response_model=List[ImageResponse])
-async def read_items(_shots: List[SS]):
+async def read_items(screen_shots: List[SS]) -> List[ImageResponse]:
+    data: List[ImageResponse] = []
 
-    _result: List[ImageResponse] = []
-
-    for _ in _shots:
-        _image = await OCRImage.from_url(_.url)
-        if not _image:
-            continue
-
-        _result.append(
-            ImageResponse(
-                url=_.url,
-                dhash=_image.dhash,
-                phash=_image.phash,
-                text=await _image.get_text(),
+    for screen_shot in screen_shots:
+        image = await OCRImage.from_url(screen_shot.url)
+        if image:
+            data.append(
+                ImageResponse(
+                    url=screen_shot.url,
+                    dhash=image.dhash,
+                    phash=image.phash,
+                    text=await image.get_text(),
+                )
             )
-        )
 
-    return _result
+    return data

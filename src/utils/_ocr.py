@@ -23,7 +23,7 @@ class OCRImage:
         crop: Image.Image.crop
         size: Image.Image.size
 
-    def __init__(self, img: Image) -> None:
+    def __init__(self, img: Image.Image) -> None:
         self._img = img
 
     def __getattr__(self, key: str) -> Any:

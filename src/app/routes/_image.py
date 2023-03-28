@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import List
 
 from fastapi import APIRouter
-
 from utils import OCRImage
 
 from ..helper._const import SS, ImageResponse

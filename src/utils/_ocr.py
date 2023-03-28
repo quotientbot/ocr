@@ -16,6 +16,8 @@ from .converters import to_async
 __all__ = ("OCRImage",)
 
 cache: "Dict[str, str]" = LRU(100)
+CONFIG = "--oem 3 --psm 12"
+LANG = "eng"
 
 
 class OCRImage:
@@ -46,7 +48,10 @@ class OCRImage:
             if resp.status != 200:
                 return None
 
-            return OCRImage(Image.open(io.BytesIO(await resp.read())).convert("L").filter(ImageFilter.SHARPEN))
+            img_data: bytes = await resp.read()
+            image: Image.Image = Image.open(io.BytesIO(img_data))
+
+            return OCRImage(image.convert("L").filter(ImageFilter.SHARPEN))
 
     async def get_text(self) -> str:
         try:
@@ -66,7 +71,7 @@ class OCRImage:
             image = image.resize((w * 3, h * 3)).filter(ImageFilter.SHARPEN)
 
             try:
-                t += pytesseract.image_to_string(image, lang="eng", config="--oem 3 --psm 12")
+                t += pytesseract.image_to_string(image, lang=LANG, config=CONFIG)  # noqa = E501
             except pytesseract.TesseractError:
                 continue
 
@@ -76,8 +81,8 @@ class OCRImage:
     def __image_slices(self, height: int = 400) -> List[Image.Image]:
         list_of_images: List[Image.Image] = []
         imgwidth, imgheight = self.size
-        for i, j in itertools.product(range(imgheight // height), range(imgwidth // imgwidth)):
-            box = (j * imgwidth, i * height, (j + 1) * imgwidth, (i + 1) * height)
+        for i, j in itertools.product(range(imgheight // height), range(imgwidth // imgwidth)):  # noqa = E501
+            box = (j * imgwidth, i * height, (j + 1) * imgwidth, (i + 1) * height)  # noqa = E501
             list_of_images.append(self.crop(box))
 
         return list_of_images

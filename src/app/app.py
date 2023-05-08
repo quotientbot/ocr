@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import APIKeyHeader
 from decouple import config

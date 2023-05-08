@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Optional
 from concurrent.futures import ThreadPoolExecutor
 from functools import wraps, partial

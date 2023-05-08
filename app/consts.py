@@ -1,7 +1,7 @@
 from pydantic import BaseModel, HttpUrl
 
 
-class SS(BaseModel):
+class Screenshot(BaseModel):
     url: HttpUrl
 
 

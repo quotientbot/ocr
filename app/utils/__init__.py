@@ -1,2 +1,2 @@
 from .converters import *
-from ._ocr import *
+from .ocr import *

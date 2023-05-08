@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from typing import List
 
-from ..helper._const import SS, ImageResponse
+from ..consts import SS, ImageResponse
 
-from utils import OCRImage
+from ..utils import OCRImage
 
 router = APIRouter()
 

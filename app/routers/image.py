@@ -5,6 +5,7 @@ from ..consts import Screenshot, ImageResponse
 
 from ..utils import OCRImage
 
+
 router = APIRouter()
 
 

@@ -31,8 +31,7 @@ This API is built to work exclusively with Discord attachments URLs that are ima
 
 > Psst! Are you one of the secret agents from the organization I applied to? Welcome! To test out this app, head over to https://quotientbot.xyz/ocr/docs. But shh... the secret key you'll need is a top-secret code. It's actually the capital short form of the organization's name. Don't tell anyone I told you!
 
-> We are using the following image </br>
-> ![image](https://user-images.githubusercontent.com/72350242/213885619-f49016e8-b69c-4471-924f-779e4c37b0e0.png)
+> We are using the following image </br> > ![image](https://user-images.githubusercontent.com/72350242/213885619-f49016e8-b69c-4471-924f-779e4c37b0e0.png)
 
 > Response:
 > ![ocr-example](https://user-images.githubusercontent.com/72350242/213885740-590c4312-a441-4f14-ac98-b8062864f5c9.png)

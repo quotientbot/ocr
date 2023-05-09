@@ -7,8 +7,8 @@ import os
 
 os.environ["OMP_THREAD_LIMIT"] = "1"  # set limit to OpenMP threads
 
-app = FastAPI(dependencies=[Depends(verify_key)])
-app.include_router(image.router)
+app = FastAPI()
+app.include_router(image.router, dependencies=[Depends(verify_key)])
 
 
 @app.get("/")

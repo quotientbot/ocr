@@ -28,7 +28,7 @@ This API is built to work exclusively with Discord attachments URLs that are ima
 - [`lru-dict`](https://pypi.org/project/lru-dict/) - A fixed size dict like container which evicts Least Recently Used (LRU) items once size limit is exceeded.
 
 ## Example Usage using Swagger UI
-> Psst! Are you one of the secret agents from the organization I applied to? Welcome! To test out this app, head over to https://quotientbot.xyz/ocr/docs. But shh... the secret key you'll need is a top-secret code. It's actually the capital short form of the organization's name. Don't tell anyone I told you! And remember this only works for Discord URLs.
+> Psst! Are you one of the secret agents from the organization I applied to? Welcome! To test out this app, head over to https://ocr.quotientbot.xyz/docs. But shh... the secret key you'll need is a top-secret code. It's actually the capital acronym of the organization's name. Don't tell anyone I told you! And remember this only works for Discord URLs.
 
 We are using the following image </br>
 ![image](https://user-images.githubusercontent.com/72350242/213885619-f49016e8-b69c-4471-924f-779e4c37b0e0.png)

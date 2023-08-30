@@ -1,8 +1,5 @@
-__pycache__/
-env/*
+node_modules
+bin
+
+.serverless
 .env
-.vscode
-.venv/*
-.log
-logs/*
-venv

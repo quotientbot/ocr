@@ -1,5 +1,12 @@
-up:
-	uvicorn app.main:app --port 8000 --host 0.0.0.0 --reload
+export GO111MODULE=on
 
-prod:
-	uvicorn app.main:app --port 8000 --host 0.0.0.0
+.PHONY: tidy build
+
+tidy:
+	go mod tidy
+
+build:
+	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64  go build  -o bin/ocr .
+
+deploy: tidy build
+	sls deploy --verbose

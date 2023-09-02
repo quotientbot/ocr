@@ -1,13 +1,27 @@
 package tools
 
 import (
+	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 func GetBytesFromURL(imageURL string) ([]byte, error) {
 
-	resp, err := http.Get(imageURL)
+	parsedURL, err := url.Parse(imageURL)
+	if err != nil {
+		return nil, err
+	}
+	// Remove query parameters
+	parsedURL.RawQuery = ""
+
+	// Reconstruct the cleaned URL
+	cleanedURL := parsedURL.String()
+	resp, err := http.Get(cleanedURL)
+
+	fmt.Println("cleanedURL: ", cleanedURL)
+
 	if err != nil {
 		return nil, err
 	}

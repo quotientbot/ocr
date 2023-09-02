@@ -13,7 +13,6 @@ ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
 RUN apt-get install -y -qq \
     tesseract-ocr-eng 
 
-# Setup your cool project with go.mod.
 WORKDIR ${GOPATH}/src/github.com/quotienbot/ocr
 
 COPY . .

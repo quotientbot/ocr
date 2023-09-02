@@ -6,7 +6,7 @@ tidy:
 	go mod tidy
 
 build:
-	go build  -o bin/ocr .
+	docker build -t "github.com/quotientbot/ocr" .
 
-run: tidy
-	go run .
+run: tidy build
+	docker run -it --rm -p 8080:8080 "github.com/quotientbot/ocr"

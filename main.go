@@ -12,12 +12,12 @@ func main() {
 	mux.HandleFunc("/", routers.IndexHandler)
 	mux.HandleFunc("/ocr", routers.OCRHandler)
 
-	
 	s := &http.Server{
-		Addr:    ":8080",
+		Addr:    "0.0.0.0:8080",
 		Handler: mux,
 	}
 
+	log.Println("Listening on port 8080")
 	log.Fatal(s.ListenAndServe())
 
 }

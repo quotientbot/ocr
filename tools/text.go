@@ -2,11 +2,13 @@ package tools
 
 import (
 	"bytes"
+	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
 	"image/png"
 
+	"github.com/corona10/goimagehash"
 	"github.com/otiai10/gosseract/v2"
 )
 
@@ -27,15 +29,21 @@ func ConvertToBlackAndWhite(img image.Image) image.Image {
 	return bwImg
 }
 
-func OCR(imageBytes []byte) (string, error) {
+func OCR(imageBytes []byte) (string, string, string, error) {
 	// Decode the imageBytes to an image.Image
 	img, format, err := image.Decode(bytes.NewReader(imageBytes))
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
 
 	// Perform preprocessing: Convert to black and white
 	bwImg := ConvertToBlackAndWhite(img)
+
+	phash, err := goimagehash.PerceptionHash(img)
+	fmt.Println("phash: ", phash.GetHash())
+
+	dhash, err := goimagehash.DifferenceHash(img)
+	fmt.Println("dhash: ", dhash)
 
 	// Encode the preprocessed image back to bytes
 	var preprocessedImageBuf bytes.Buffer
@@ -46,7 +54,7 @@ func OCR(imageBytes []byte) (string, error) {
 		err = png.Encode(&preprocessedImageBuf, bwImg)
 	}
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
 
 	client := gosseract.NewClient()
@@ -57,8 +65,8 @@ func OCR(imageBytes []byte) (string, error) {
 	// Perform OCR on the preprocessed image
 	text, err := client.Text()
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
 
-	return text, nil
+	return text, dhash.ToString(), phash.ToString(), nil
 }

@@ -30,13 +30,13 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	text, err := tools.OCR(imageBytes)
+	text, dhash, phash, err := tools.OCR(imageBytes)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		// log.Fatal(err)
 
 	}
-	res := map[string]string{"image": img.ImageURL, "text": text}
+	res := map[string]string{"url": img.ImageURL, "dhash": dhash, "phash": phash, "text": text}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

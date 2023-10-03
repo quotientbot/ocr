@@ -2,7 +2,6 @@ package tools
 
 import (
 	"bytes"
-	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
@@ -39,11 +38,9 @@ func OCR(imageBytes []byte) (string, string, string, error) {
 	// Perform preprocessing: Convert to black and white
 	bwImg := ConvertToBlackAndWhite(img)
 
-	phash, err := goimagehash.PerceptionHash(img)
-	fmt.Println("phash: ", phash.GetHash())
+	phash, err := goimagehash.ExtPerceptionHash(img, 64, 64)
 
-	dhash, err := goimagehash.DifferenceHash(img)
-	fmt.Println("dhash: ", dhash)
+	dhash, err := goimagehash.ExtDifferenceHash(img, 64, 64)
 
 	// Encode the preprocessed image back to bytes
 	var preprocessedImageBuf bytes.Buffer

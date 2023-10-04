@@ -4,10 +4,18 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/joho/godotenv"
 	"github.com/quotientbot/ocr/routers"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	log.Println("Loaded .env successfully")
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", routers.IndexHandler)
 	mux.HandleFunc("/ocr", routers.OCRHandler)

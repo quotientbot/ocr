@@ -3,6 +3,7 @@ package routers
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/quotientbot/ocr/tools"
 )
@@ -15,6 +16,15 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Check the Authorization header for the secret key
+	secretKey := os.Getenv("SECRET_KEY")
+
+	authHeader := r.Header.Get("Authorization")
+	if authHeader != "Bearer "+secretKey {
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 

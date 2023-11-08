@@ -27,5 +27,5 @@ If put simply, In response to an HTTP request containing an array of Image URLs,
 This project is licensed under the MPL-2.0 license - see the [LICENSE](LICENSE) file for details.
 ___
 ### Contributors 👥
-<a href="https://github.com/quotientbot/Quotient-Bot/graphs/contributors">
+<a href="https://github.com/quotientbot/ocr/graphs/contributors">
 

@@ -45,7 +45,7 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		res := map[string]string{"url": imageURL, "dhash": dhash, "phash": phash, "text": text}
+		res := map[string]string{"url": imageURL, "dhash": dhash[2:], "phash": phash[2:], "text": text}
 		result = append(result, res)
 	}
 

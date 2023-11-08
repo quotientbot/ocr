@@ -8,12 +8,11 @@ import (
 	"github.com/quotientbot/ocr/tools"
 )
 
-type Image struct {
-	ImageURL string `json:"image"`
+type Images struct {
+	ImageURLs []string `json:"urls"`
 }
 
 func OCRHandler(w http.ResponseWriter, r *http.Request) {
-
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -21,34 +20,36 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Check the Authorization header for the secret key
 	secretKey := os.Getenv("SECRET_KEY")
-
 	authHeader := r.Header.Get("Authorization")
 	if authHeader != "Bearer "+secretKey {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	var img Image
-	if err := json.NewDecoder(r.Body).Decode(&img); err != nil {
+	var imgs Images
+	if err := json.NewDecoder(r.Body).Decode(&imgs); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	imageBytes, err := tools.GetBytesFromURL(img.ImageURL)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+	result := make([]map[string]string, 0)
 
-	text, dhash, phash, err := tools.OCR(imageBytes)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		// log.Fatal(err)
+	for _, imageURL := range imgs.ImageURLs {
+		imageBytes, err := tools.GetBytesFromURL(imageURL)
+		if err != nil {
+			continue
+		}
 
+		text, dhash, phash, err := tools.OCR(imageBytes)
+		if err != nil {
+			continue
+		}
+
+		res := map[string]string{"url": imageURL, "dhash": dhash, "phash": phash, "text": text}
+		result = append(result, res)
 	}
-	res := map[string]string{"url": img.ImageURL, "dhash": dhash, "phash": phash, "text": text}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(res)
+	json.NewEncoder(w).Encode(result)
 }

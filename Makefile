@@ -11,8 +11,10 @@ tidy:
 build:
 	docker build -t "github.com/quotientbot/ocr" .
 
-run: tidy build # when running locally, use this
+run: build # when running locally, use this.
 	docker run -it --rm -p 8080:8080 "github.com/quotientbot/ocr"
+
+local: tidy run # requires go 1.11+
 
 prod: pull build
 	docker stop ocr || true
